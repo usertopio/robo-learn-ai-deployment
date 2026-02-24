@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "mhutchie.git-graph",
+    "ms-azuretools.vscode-containers"
+  ]
+}
