@@ -11,8 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Stop old containers
+        run: docker compose down
+
       - name: Pull images
         run: docker compose pull
 
-      - name: Restart containers
+      - name: Start containers
         run: docker compose up -d
