@@ -1,0 +1,20 @@
+name: Deploy_CD
+
+on:
+  workflow_run:
+    workflows: ["Frontend_CI"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Pull images
+        run: docker compose pull
+
+      - name: Restart containers
+        run: docker compose up -d

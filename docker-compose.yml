@@ -1,7 +1,7 @@
 name: robo-learn-ai
 services:
   frontend1:
-    image:  usertopio/robo-learn-ai-frontend:0.0.0-amd64-arm64
+    image: usertopio/robo-learn-ai-frontend:0.0.0-amd64-arm64
     container_name: robo-learn-ai-frontend
-    ports: 
+    ports:
       - "8080:80"
