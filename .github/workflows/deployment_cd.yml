@@ -11,6 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Remove old container
+        run: docker rm -f robo-learn-ai-frontend || true
+
       - name: Stop old containers
         run: docker compose down
 
