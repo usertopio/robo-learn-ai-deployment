@@ -2,17 +2,17 @@ name: Deploy_CD
 
 on:
   repository_dispatch:
-    types: [deploy_frontend]
+    types: [deploy_frontend, deploy_backend, deploy_model]
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
 
-      - name: Remove old container
-        run: docker rm -f robo-learn-ai-frontend || true
+      - name: Remove old containers
+        run: docker rm -f robo-learn-ai-frontend robo-learn-ai-backend robo-learn-ai-model || true
 
       - name: Stop old containers
         run: docker compose down
