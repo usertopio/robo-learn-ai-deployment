@@ -1,7 +1,36 @@
 name: robo-learn-ai
+
 services:
-  frontend1:
-    image:  usertopio/robo-learn-ai-frontend:0.0.0-amd64-arm64
+  backend:
+    build:
+      context: ../robo-learning-ai-backend
+    container_name: robo-learn-ai-backend
+    ports:
+      - "8081:3000"
+    volumes:
+      - ../robo-learning-ai-backend/uploads:/app/uploads
+      - ../robo-learning-ai-backend/database.sqlite:/app/database.sqlite
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    restart: always
+
+  frontend:
+    build:
+      context: ../robo-learning-ai-frontend
     container_name: robo-learn-ai-frontend
-    ports: 
+    ports:
       - "8080:80"
+    depends_on:
+      - backend
+    restart: always
+
+  model:
+    build:
+      context: ../robo-learning-ai-model
+    container_name: robo-learn-ai-model
+    environment:
+      - BACKEND_URL=http://backend:3000
+    depends_on:
+      - backend
+    restart: always
