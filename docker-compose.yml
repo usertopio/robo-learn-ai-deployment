@@ -1,8 +1,7 @@
 name: robo-learn-ai
 services:
   backend:
-    build:
-      context: ../robo-learn-ai-backend
+    image: usertopio/robo-learn-ai-backend:latest-amd64-top
     container_name: robo-learn-ai-backend
     restart: unless-stopped
     ports:
@@ -12,7 +11,6 @@ services:
       - JWT_SECRET=robo-learn-ai-dev-secret-key-2026
     volumes:
       - backend_data:/app/uploads
-      # Removed problematic file-to-volume mapping
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/api/projects"]
       interval: 5s
@@ -20,8 +18,7 @@ services:
       retries: 5
 
   frontend:
-    build:
-      context: ../robo-learn-ai-frontend
+    image: usertopio/robo-learn-ai-frontend:latest-amd64-top
     container_name: robo-learn-ai-frontend
     restart: unless-stopped
     ports:
@@ -31,8 +28,7 @@ services:
         condition: service_healthy
 
   model:
-    build:
-      context: ../robo-learn-ai-model
+    image: usertopio/robo-learn-ai-model:latest-amd64-top
     container_name: robo-learn-ai-model
     restart: unless-stopped
     environment:
