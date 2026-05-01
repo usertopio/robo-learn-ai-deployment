@@ -1,8 +1,45 @@
 name: robo-learn-ai
 services:
-  frontend1:
-    image: usertopio/robo-learn-ai-frontend:0.0.0-amd64-arm64
+  backend:
+    build:
+      context: ../robo-learn-ai-backend
+    container_name: robo-learn-ai-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - JWT_SECRET=robo-learn-ai-dev-secret-key-2026
+    volumes:
+      - backend_data:/app/uploads
+      # Removed problematic file-to-volume mapping
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/projects"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ../robo-learn-ai-frontend
     container_name: robo-learn-ai-frontend
     restart: unless-stopped
     ports:
       - "8080:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  model:
+    build:
+      context: ../robo-learn-ai-model
+    container_name: robo-learn-ai-model
+    restart: unless-stopped
+    environment:
+      - BACKEND_URL=http://backend:3000
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  backend_data:
