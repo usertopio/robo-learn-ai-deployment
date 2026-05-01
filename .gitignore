@@ -2,3 +2,10 @@
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+# OS files
+.DS_Store
+
+# Docker volumes / data
+data/
+db/
+uploads/
