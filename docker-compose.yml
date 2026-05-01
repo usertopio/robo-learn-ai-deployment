@@ -11,6 +11,7 @@ services:
       - JWT_SECRET=robo-learn-ai-dev-secret-key-2026
     volumes:
       - backend_data:/app/uploads
+      - backend_db:/app/database.sqlite
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/api/projects"]
       interval: 5s
@@ -39,3 +40,4 @@ services:
 
 volumes:
   backend_data:
+  backend_db:
