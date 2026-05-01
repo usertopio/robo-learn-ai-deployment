@@ -14,7 +14,7 @@ services:
       - backend_data:/app/uploads
       - backend_db:/app/data
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3000/api/projects"]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/projects').then(r=>{process.exit(r.ok?0:1)}).catch(()=>process.exit(1))"]
       interval: 5s
       timeout: 5s
       retries: 5
